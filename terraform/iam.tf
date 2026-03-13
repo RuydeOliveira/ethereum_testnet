@@ -41,12 +41,12 @@ resource "aws_iam_role_policy" "dns_update" {
           "route53:ChangeResourceRecordSets",
           "route53:ListResourceRecordSets"
         ]
-        Resource = [ aws_route53_zone.internal_zone.arn ]
+        Resource = [aws_route53_zone.internal_zone.arn]
       },
       {
         Effect = "Allow"
         Action = [
-            "route53:ListHostedZones"
+          "route53:ListHostedZones"
         ],
         Resource = ["*"]
       }

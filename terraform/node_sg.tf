@@ -41,11 +41,11 @@ resource "aws_vpc_security_group_ingress_rule" "ethereum_node_udp_13k" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ethereum_node_tcp_4k" {
-  security_group_id = aws_security_group.ethereum_node.id
+  security_group_id            = aws_security_group.ethereum_node.id
   referenced_security_group_id = aws_security_group.ethereum_validator.id
-  from_port         = 4000
-  ip_protocol       = "tcp"
-  to_port           = 4000
+  from_port                    = 4000
+  ip_protocol                  = "tcp"
+  to_port                      = 4000
 }
 
 resource "aws_vpc_security_group_egress_rule" "ethereum_node_egress_allow_all" {
