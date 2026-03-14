@@ -41,5 +41,5 @@ chmod 550 /home/prysm-beacon/bin/prysm.sh
 
 # Systemctl
 systemctl set-environment PRYSM_BEACON_RPC_HOST=$(hostname -I)
-systemctl enable dnsupdate
+systemctl enable --now dnsupdate
 systemctl daemon-reload
