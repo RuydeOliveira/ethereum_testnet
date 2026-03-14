@@ -27,11 +27,22 @@ result=$(aws ssm list-command-invocations \
     --query "CommandInvocations[*].CommandPlugins[*].Output[]" \
     --output text)
 
+echo $result
+
+
 validator_id=$(echo "$result" | cut -d'"' -f2 | cut -c-10)
-last_attested_slot=$(echo "$result" | cut -d';' -f1 | cut -d' ' -f2)
-next_attestation_slot=$(echo "$result" | cut -d';' -f2 | cut -d' ' -f2)
-validator_statuses=$(echo "$result" | cut -d';' -f3 | cut -d' ' -f2)
-successful_attestations=$(echo "$result" | cut -d';' -f4 | cut -d' ' -f2)
+
+validator_statuses=$(echo "$result" | grep -oP 'validator_statuses[^ ]* \K.*?(?=;)')
+validator_statuses=${validator_statuses:="0"}
+
+last_attested_slot=$(echo "$result" | grep -oP 'validator_last_attested_slot[^ ]* \K.*?(?=;)')
+last_attested_slot=${last_attested_slot:="UNKNOWN"}
+
+next_attestation_slot=$(echo "$result" | grep -oP 'validator_next_attestation_slot[^ ]* \K.*?(?=;)')
+next_attestation_slot=${next_attestation_slot:="UNKNOWN"}
+
+successful_attestations=$(echo "$result" | grep -oP 'validator_successful_attestations[^ ]* \K.*?(?=;)')
+successful_attestations=${successful_attestations:="UNKNOWN"}
 
 declare -A statuses=( [0]="UNKNOWN" [1]="DEPOSITED" [2]="PENDING" [3]="ACTIVE" [4]="EXITING" [5]="SLASHING" [6]="EXITED" )
 
