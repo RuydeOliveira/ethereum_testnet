@@ -107,3 +107,9 @@ write_files:
     # Use AWS CLI to update the Route 53 record set
     aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --change-batch file:///tmp/route53_changes.json
   permissions: '0550'
+
+- path: /etc/rc.local
+  content: |
+    #!/bin/env bash
+    systemctl set-environment PRYSM_BEACON_RPC_HOST=$(hostname -I)
+  permissions: '0770'
